@@ -9,7 +9,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronLeft, ChevronRight, Download, Search, SearchX } from "lucide-react";
+import { ArrowUpDown, ChevronLeft, ChevronRight, Download, Search, SearchX, type LucideIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -26,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   searchPlaceholder?: string;
   emptyTitle?: string;
   emptyDescription?: string;
-  emptyIcon?: React.ComponentType<{ className?: string }>;
+  emptyIcon?: LucideIcon;
   emptyActionLabel?: string;
   onEmptyAction?: () => void;
   onExportCsv?: () => void;

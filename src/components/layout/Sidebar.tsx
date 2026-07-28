@@ -13,6 +13,7 @@ import {
   Settings,
   Users,
   BarChart3,
+  type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -25,7 +26,7 @@ import { countPendingApprovals } from "@/api/approvals.api";
 interface NavItem {
   label: string;
   to: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: LucideIcon;
   roles: UserRole[];
   /** Distinct accent color per item — shown on the active state (background tint + left border + icon/text color). */
   color: string;

@@ -70,11 +70,16 @@ export default function CoursesPage() {
 
   async function onSubmit(values: CourseFormValues) {
     try {
+      const input = {
+        ...values,
+        description: values.description || null,
+        duration_months: values.duration_months ?? null,
+      };
       if (editing) {
-        await updateCourse(editing.id, values);
+        await updateCourse(editing.id, input);
         toast.success("Course updated");
       } else {
-        await createCourse(values);
+        await createCourse(input);
         toast.success("Course created");
       }
       setFormOpen(false);

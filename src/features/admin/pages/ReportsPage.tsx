@@ -10,6 +10,7 @@ import { downloadCsv } from "@/lib/utils";
 import { getAdminDashboardStats, type AdminDashboardStats } from "@/api/dashboard.api";
 
 interface CourseEnrollment {
+  [key: string]: unknown;
   course_name: string;
   student_count: number;
 }

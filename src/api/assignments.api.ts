@@ -98,8 +98,9 @@ export async function deleteAssignment(id: string) {
   await logActivity("assignment.deleted", "assignment", id, {});
 }
 
-export function getAssignmentFileUrl(path: string) {
-  const { data } = supabase.storage.from("assignments").createSignedUrl(path, 60 * 60);
+export async function getAssignmentFileUrl(path: string) {
+  const { data, error } = await supabase.storage.from("assignments").createSignedUrl(path, 60 * 60);
+  if (error) throw error;
   return data;
 }
 
