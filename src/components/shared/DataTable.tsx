@@ -9,7 +9,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronLeft, ChevronRight, Download, Search, SearchX } from "lucide-react";
+import { ArrowUpDown, ChevronLeft, ChevronRight, Download, Search, SearchX, type LucideIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -111,8 +111,8 @@ export function DataTable<TData, TValue>({
       {isTrulyEmpty ? (
         <div className="rounded-lg border">
           <EmptyState
-            // ✅ FIXED: Added type assertion to satisfy TypeScript when emptyIcon is potentially undefined
-            icon={emptyIcon as React.ComponentType<{ className?: string }>}
+            // ✅ FIXED: Cast to LucideIcon to satisfy EmptyState's type requirements
+            icon={emptyIcon as LucideIcon | undefined}
             title={emptyTitle}
             description={emptyDescription}
             actionLabel={emptyActionLabel}
