@@ -70,10 +70,11 @@ export default function CoursesPage() {
 
   async function onSubmit(values: CourseFormValues) {
     try {
-      // ✅ FIXED: Convert undefined to null for description to satisfy API type expectations
+      // ✅ FIXED: Convert undefined to null for both description and duration_months
       const payload = {
         ...values,
         description: values.description ?? null,
+        duration_months: values.duration_months ?? null,
       };
 
       if (editing) {
