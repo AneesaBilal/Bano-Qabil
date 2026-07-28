@@ -25,7 +25,8 @@ import { countPendingApprovals } from "@/api/approvals.api";
 interface NavItem {
   label: string;
   to: string;
-  icon: React.ComponentType<{ className?: string }>;
+  // ✅ FIXED: Added style?: React.CSSProperties to the component's allowed props
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   roles: UserRole[];
   /** Distinct accent color per item — shown on the active state (background tint + left border + icon/text color). */
   color: string;
