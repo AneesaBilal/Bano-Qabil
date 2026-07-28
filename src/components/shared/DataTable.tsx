@@ -111,7 +111,8 @@ export function DataTable<TData, TValue>({
       {isTrulyEmpty ? (
         <div className="rounded-lg border">
           <EmptyState
-            icon={emptyIcon}
+            // ✅ FIXED: Added type assertion to satisfy TypeScript when emptyIcon is potentially undefined
+            icon={emptyIcon as React.ComponentType<{ className?: string }>}
             title={emptyTitle}
             description={emptyDescription}
             actionLabel={emptyActionLabel}
