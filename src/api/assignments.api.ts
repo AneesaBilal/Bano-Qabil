@@ -75,7 +75,7 @@ export async function createAssignment(input: CreateAssignmentInput) {
 export async function updateAssignment(id: string, input: Partial<CreateAssignmentInput>) {
   const { files, ...rest } = input;
   const { data, error } = await supabase.from("assignments").update(rest).eq("id", id).select().single();
-  if (error) throw error;
+  if (error || !data) throw error || new Error("No data returned");
 
   if (files?.length) {
     const paths: string[] = [...(data.attachment_paths ?? [])];
@@ -103,14 +103,14 @@ export async function getAssignmentFileUrl(path: string) {
     .from("assignments")
     .createSignedUrl(path, 60 * 60);
 
-  if (error) throw error;
+  if (error || !data) throw error || new Error("No data returned");
 
   return data.signedUrl;
 }
 
 export async function getSignedAssignmentUrl(path: string) {
   const { data, error } = await supabase.storage.from("assignments").createSignedUrl(path, 60 * 60);
-  if (error) throw error;
+  if (error || !data) throw error || new Error("No data returned");
   return data.signedUrl;
 }
 
@@ -180,7 +180,7 @@ export async function submitAssignment(input: SubmitAssignmentInput) {
     )
     .select()
     .single();
-  if (error) throw error;
+  if (error || !data) throw error || new Error("No data returned");
 
   await logActivity("submission.created", "assignment_submission", data.id, { assignment_id: input.assignmentId });
   return data as AssignmentSubmission;
@@ -200,12 +200,12 @@ export async function gradeSubmission(id: string, grade: number, feedback?: stri
     .eq("id", id)
     .select()
     .single();
-  if (error) throw error;
+  if (error || !data) throw error || new Error("No data returned");
   return data as AssignmentSubmission;
 }
 
 export async function getSignedSubmissionUrl(path: string) {
   const { data, error } = await supabase.storage.from("submissions").createSignedUrl(path, 60 * 60);
-  if (error) throw error;
+  if (error || !data) throw error || new Error("No data returned");
   return data.signedUrl;
 }
