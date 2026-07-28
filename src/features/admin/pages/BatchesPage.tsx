@@ -106,7 +106,6 @@ export default function BatchesPage() {
       if (editing) {
         await updateBatch(editing.id, {
           ...values,
-          // ✅ FIXED: Changed || to ?? to properly handle undefined and satisfy string | null type
           start_date: values.start_date ?? null,
           end_date: values.end_date ?? null,
         });
@@ -114,7 +113,6 @@ export default function BatchesPage() {
       } else {
         await createBatch({
           ...values,
-          // ✅ FIXED: Changed || to ?? to properly handle undefined and satisfy string | null type
           start_date: values.start_date ?? null,
           end_date: values.end_date ?? null,
         });
@@ -279,7 +277,8 @@ export default function BatchesPage() {
                     <FormItem>
                       <FormLabel>Start date</FormLabel>
                       <FormControl>
-                        <Input type="date" {...field} />
+                        {/* ✅ FIXED: Convert null to empty string for Input component */}
+                        <Input type="date" {...field} value={field.value ?? ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -292,7 +291,8 @@ export default function BatchesPage() {
                     <FormItem>
                       <FormLabel>End date</FormLabel>
                       <FormControl>
-                        <Input type="date" {...field} />
+                        {/* ✅ FIXED: Convert null to empty string for Input component */}
+                        <Input type="date" {...field} value={field.value ?? ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
