@@ -36,8 +36,8 @@ const batchSchema = z.object({
   course_id: z.string().min(1, "Select a course"),
   name: z.string().min(1, "Batch name is required"),
   timing: z.string().min(1, "Timing is required"),
-  start_date: z.string().optional(),
-  end_date: z.string().optional(),
+  start_date: z.string().nullable().optional(),
+  end_date: z.string().nullable().optional(),
 });
 type BatchFormValues = z.infer<typeof batchSchema>;
 
@@ -104,10 +104,18 @@ export default function BatchesPage() {
   async function onSubmit(values: BatchFormValues) {
     try {
       if (editing) {
-        await updateBatch(editing.id, values);
+        await updateBatch(editing.id, {
+       ...values,
+       start_date: values.start_date || null,
+       end_date: values.end_date || null,
+    });
         toast.success("Batch updated");
       } else {
-        await createBatch(values);
+        await createBatch({
+        ...values,
+        start_date: values.start_date || null,
+        end_date: values.end_date || null,
+     });
         toast.success("Batch created");
       }
       setFormOpen(false);
