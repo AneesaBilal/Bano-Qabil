@@ -103,11 +103,16 @@ export default function BatchesPage() {
 
   async function onSubmit(values: BatchFormValues) {
     try {
+      const input = {
+        ...values,
+        start_date: values.start_date || null,
+        end_date: values.end_date || null,
+      };
       if (editing) {
-        await updateBatch(editing.id, values);
+        await updateBatch(editing.id, input);
         toast.success("Batch updated");
       } else {
-        await createBatch(values);
+        await createBatch(input);
         toast.success("Batch created");
       }
       setFormOpen(false);

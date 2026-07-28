@@ -3,11 +3,13 @@ import type { LucideIcon } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   icon: LucideIcon;
   label: string;
   value: number | string;
+  iconClassName?: string;
   emptyHint?: string;
   emptyActionLabel?: string;
   emptyActionTo?: string;
@@ -17,6 +19,7 @@ export function StatCard({
   icon: Icon,
   label,
   value,
+  iconClassName,
   emptyHint,
   emptyActionLabel,
   emptyActionTo,
@@ -31,7 +34,7 @@ export function StatCard({
     <Card className="transition-all duration-200 hover:shadow-md">
       <CardContent className="flex min-h-[170px] flex-col items-center justify-center p-5 text-center">
 
-        <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <div className={cn("mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary", iconClassName)}>
           <Icon className="h-6 w-6" />
         </div>
 
