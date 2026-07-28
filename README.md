@@ -1,175 +1,540 @@
-# Bano Qabil — Learning Management System
+# 🎓 Bano Qabil Learning Management System (LMS)
 
-A production-ready full-stack web application for managing student assignments
-and attendance at an educational institute, built with React + Vite + TypeScript,
-Tailwind CSS, shadcn/ui, Supabase, and deployable on Vercel.
+A modern full-stack Learning Management System designed for educational institutes to manage students, teachers, courses, batches, assignments, attendance, approvals, and academic operations through a centralized digital platform.
 
-## Tech Stack
+Bano Qabil LMS provides a secure and scalable environment with role-based access for **Administrators, Teachers, and Students**, helping institutes move from manual processes to efficient digital management.
 
-- **React 18 + Vite + TypeScript** — app shell and build tooling
-- **Tailwind CSS + shadcn/ui (Radix primitives)** — styling and accessible components
-- **React Router** — routing and role-based route protection
-- **React Hook Form + Zod** — form state and validation
-- **Zustand** — auth/theme global state
-- **TanStack Table** — data tables (search, sort, pagination)
-- **Supabase** — Postgres database, Auth, Storage, Edge Functions
+---
 
-## Folder Structure
+# 📌 Project Overview
+
+Bano Qabil Learning Management System is a complete academic management solution built to simplify institute operations.
+
+The platform provides a single workspace where administrators, teachers, and students can manage academic activities including:
+
+- Student management
+- Teacher management
+- Course organization
+- Batch management
+- Assignment handling
+- Attendance tracking
+- User approvals
+- Academic reporting
+
+The system focuses on providing a clean, modern, and user-friendly experience while maintaining security through authentication, authorization, and database-level access control.
+
+---
+
+# ✨ Features
+
+## 👨‍💼 Admin Features
+
+- Complete institute dashboard
+- Student management
+- Teacher management
+- User approval system
+- Course management
+- Batch management
+- Assignment monitoring
+- Attendance overview
+- Reports and analytics
+- Recent activity tracking
+- System settings
+
+---
+
+## 👨‍🎓 Student Features
+
+- Student profile management
+- View assigned courses
+- View batches
+- Access assignments
+- Track assignment submissions
+- View attendance records
+- Monitor academic progress
+
+---
+
+## 👨‍🏫 Teacher Features
+
+- Teacher dashboard
+- Manage assigned batches
+- Create and manage assignments
+- Track student submissions
+- Record attendance
+- Monitor student performance
+
+---
+
+## 📚 Academic Management
+
+- Course creation and organization
+- Batch scheduling
+- Student enrollment
+- Teacher assignment
+- Academic record management
+
+---
+
+## 📝 Assignment Management
+
+- Create assignments
+- Assign assignments to batches
+- Track submissions
+- Monitor pending and completed work
+
+---
+
+## 📅 Attendance Management
+
+- Record student attendance
+- Track attendance history
+- Calculate attendance percentage
+- Monitor student participation
+
+---
+
+# 🛠️ Technologies Used
+
+React 19, TypeScript, Vite, Tailwind CSS, Shadcn/UI, React Router DOM, React Hook Form, TanStack Query, Zustand, Framer Motion, Lucide React, Supabase, PostgreSQL, Supabase Auth, Supabase Storage, Row Level Security (RLS), Supabase Edge Functions
+
+---
+
+# 🏗️ Project Architecture
+
+The project follows a clean feature-based architecture.
 
 ```
 src/
-  api/            # All Supabase calls live here — never call supabase.* from a component
-  components/
-    ui/           # shadcn/ui primitives (button, input, dialog, table, ...)
-    layout/       # AppShell, Sidebar, Navbar, Sheet (mobile drawer)
-    shared/       # DataTable, EmptyState, ErrorState, ConfirmDialog, FileUpload, ...
-  features/       # One folder per domain: auth, dashboard, students, assignments,
-                  # attendance, admin, settings, notifications. Each has pages/
-                  # and components/ subfolders and, where relevant, schemas.ts.
-  hooks/          # useAuth, useAsync, useDebounce
-  lib/            # supabase client, cn(), formatters, constants
-  routes/         # ProtectedRoute + 404 page
-  store/          # Zustand stores (auth, theme)
-  types/          # Hand-written types mirroring the SQL schema
+│
+├── api/                   
+│   # All Supabase API calls
+│   # Components never directly call supabase.*
+│
+├── components/
+│   │
+│   ├── ui/
+│   │   # shadcn/ui reusable components
+│   │   # Button, Input, Dialog, Table, Card
+│   │
+│   ├── layout/
+│   │   # AppShell, Sidebar, Navbar
+│   │   # Mobile drawer components
+│   │
+│   └── shared/
+│       # DataTable
+│       # EmptyState
+│       # ErrorState
+│       # ConfirmDialog
+│       # FileUpload
+│
+├── features/
+│   │
+│   ├── auth/
+│   ├── dashboard/
+│   ├── students/
+│   ├── assignments/
+│   ├── attendance/
+│   ├── admin/
+│   ├── settings/
+│   └── notifications/
+│
+│   # Each feature contains:
+│   # pages/
+│   # components/
+│   # schemas.ts
+│
+├── hooks/
+│   # Custom React hooks
+│   # useAuth
+│   # useAsync
+│   # useDebounce
+│
+├── lib/
+│   # Supabase client
+│   # Utility functions
+│   # Constants
+│
+├── routes/
+│   # Protected routes
+│   # 404 page
+│
+├── store/
+│   # Zustand stores
+│   # Authentication state
+│   # Theme state
+│
+├── types/
+│   # TypeScript database types
+│
+└── main.tsx
+
+
 supabase/
-  schema.sql      # Tables, enums, triggers, helper functions
-  policies.sql    # Row Level Security policies
-  storage.sql     # Storage buckets + policies
-  seed.sql        # Optional sample courses/batches for local dev
-  functions/
-    create-user/  # Edge Function: admin-only user provisioning (service role key)
+
+├── schema.sql
+│   # Database tables
+│   # Enums
+│   # Triggers
+│   # Helper functions
+│
+├── policies.sql
+│   # Row Level Security policies
+│
+├── storage.sql
+│   # Storage buckets and policies
+│
+├── seed.sql
+│   # Development sample data
+│
+└── functions/
+    └── create-user/
+        # Admin user provisioning
+        # Secure Edge Function
 ```
 
-This structure intentionally keeps all Supabase/browser-only calls inside `src/api`
-and `src/lib`, and keeps `src/features/*` free of platform-specific code, so the
-same features can later be reused in a Tauri or Electron desktop shell — only
-`src/lib/supabase.ts` and `main.tsx`/`index.html` would need platform-specific
-adjustments.
+---
 
-## 1. Supabase Setup
+# 🗄️ Database Structure
 
-1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run the following files **in order**:
-   1. `supabase/schema.sql`
-   2. `supabase/policies.sql`
-   3. `supabase/storage.sql`
-   4. *(optional)* `supabase/seed.sql` for sample courses/batches
-   5. `supabase/approval_workflow.sql` — adds the Admin approval workflow
-      (Student/Teacher self-registrations start `pending` and can't sign in
-      until an Admin approves them from **Approvals** in the sidebar)
-3. In **Authentication → URL Configuration**, set:
-   - Site URL: your deployed URL (or `http://localhost:5173` for local dev)
-   - Redirect URLs: add `http://localhost:5173/reset-password` and your
-     production `https://yourdomain.com/reset-password`
-4. In **Authentication → Providers**, ensure Email is enabled. Disable "Confirm
-   email" only if you want instant sign-in during local testing.
-5. Create your first **Super Admin**:
-   - Sign up normally through the app (role = Admin, since Super Admin isn't
-     self-selectable), then in the SQL Editor run:
-     ```sql
-     update public.profiles set role = 'super_admin' where email = 'you@example.com';
-     ```
+The project uses Supabase PostgreSQL.
 
-### Deploying the Edge Function
+Main tables:
 
-The `create-user` function lets Admins provision Teacher/Student accounts
-(with the service role key, never exposed to the browser):
+```
+profiles
+ └── User information and roles
+
+students
+ └── Student records
+
+teachers
+ └── Teacher information
+
+courses
+ └── Course management
+
+batches
+ └── Batch scheduling
+
+assignments
+ └── Assignment management
+
+assignment_submissions
+ └── Student submissions
+
+attendance
+ └── Attendance records
+
+activity_logs
+ └── System activities
+```
+
+---
+
+# 🔐 Authentication & Security
+
+Security features:
+
+- Supabase Authentication
+- Role-based access control
+- Protected routes
+- Database Row Level Security (RLS)
+- Secure API separation
+- Permission-based operations
+
+Supported roles:
+
+```
+Admin
+Teacher
+Student
+```
+
+---
+
+# 🖼️ Application Screenshots
+
+## 🏠 Homepage
+
+The homepage introduces the Bano Qabil LMS platform.
+
+Features:
+
+- Bano Qabil branding
+- Navigation menu
+- Hero section
+- Modern grid-pattern background
+- Call-to-action buttons
+
+Hero message:
+
+> Empowering institutes with modern academic management
+
+Main heading:
+
+> Bano Qabil Learning Management System
+
+---
+
+## 📖 About Page
+
+The About page explains the platform vision and mission.
+
+Sections:
+
+### Our Mission
+
+Making academic management accessible, organized, and stress-free.
+
+### Our Vision
+
+Helping schools and academies manage complete academic operations digitally.
+
+### Quality Education
+
+Reducing paperwork and improving teacher productivity.
+
+### Student Growth
+
+Providing visibility into:
+
+- Assignments
+- Grades
+- Attendance
+
+### Career Development
+
+Maintaining structured academic records.
+
+### Digital Learning
+
+Connecting:
+
+- Students
+- Teachers
+- Administrators
+
+---
+
+## 📞 Contact Page
+
+The contact page provides institute communication options.
+
+Includes:
+
+Contact information:
+
+```
+Address:
+123 Education Avenue,
+Islamabad, Pakistan
+
+Phone:
++92 300 1234567
+
+Email:
+hello@banoqabil.example
+```
+
+Inquiry form:
+
+- Name
+- Email
+- Message
+- Send Message button
+
+---
+
+## 🔑 Login Page
+
+The login page provides secure user access.
+
+Features:
+
+- Bano Qabil branding
+- Email authentication
+- Password visibility toggle
+- Remember me option
+- Forgot password link
+- Role-based security message
+
+---
+
+## 📊 Admin Dashboard
+
+The admin dashboard provides complete institute control.
+
+Sidebar:
+
+- Dashboard
+- Students
+- Teachers
+- Manage Users
+- Courses
+- Batches
+- Assignments
+- Attendance
+- Approvals
+- Reports
+- Settings
+
+Dashboard sections:
+
+### Student Management
+
+Manage:
+
+- Profiles
+- Batches
+- Attendance
+
+### Teacher Management
+
+Manage:
+
+- Teachers
+- Assignments
+- Classroom activities
+
+### Academic Overview
+
+Track:
+
+- Courses
+- Batches
+- Institute performance
+
+### Recent Activity
+
+Displays:
+
+- User actions
+- System updates
+- Academic events
+
+---
+
+# ⚙️ Installation & Setup
+
+## Clone Repository
 
 ```bash
-supabase login
-supabase link --project-ref <your-project-ref>
-supabase functions deploy create-user
+git clone <repository-url>
+
+cd student-lms
 ```
 
-It reads `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`
-from the function's environment — these are provided automatically by Supabase
-for deployed Edge Functions.
+---
 
-### Storage Buckets
-
-`storage.sql` creates three buckets:
-- `avatars` (public) — profile pictures
-- `assignments` (private) — teacher-uploaded assignment files
-- `submissions` (private) — student-uploaded submission files
-
-## 2. Local Development
+## Install Dependencies
 
 ```bash
 npm install
-cp .env.example .env      # then fill in your Supabase URL + anon key
+```
+
+---
+
+## Environment Variables
+
+Create `.env` file:
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+
+VITE_SUPABASE_ANON_KEY=your_supabase_key
+```
+
+---
+
+## Start Development Server
+
+```bash
 npm run dev
 ```
 
-The app runs at `http://localhost:5173`.
+Application runs on:
 
-### Environment Variables
-
-| Variable                  | Description                                  |
-|---------------------------|-----------------------------------------------|
-| `VITE_SUPABASE_URL`       | Your Supabase project URL                     |
-| `VITE_SUPABASE_ANON_KEY`  | Your Supabase anon/public API key             |
-
-Never put the service role key in the frontend `.env` — it's only used inside
-the Edge Function, server-side.
-
-## 3. Build
-
-```bash
-npm run build     # type-checks then builds to dist/
-npm run preview   # preview the production build locally
+```
+http://localhost:5173
 ```
 
-## 4. Deploy to Vercel
+---
 
-1. Push this repo to GitHub/GitLab/Bitbucket.
-2. In Vercel, **Add New Project** → import the repo. Vercel auto-detects Vite
-   (via `vercel.json`, which also adds an SPA rewrite so client-side routes
-   like `/students/123` don't 404 on refresh).
-3. Add environment variables in **Project Settings → Environment Variables**:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-4. Deploy. Update your Supabase Auth redirect URLs to include the new
-   `https://<project>.vercel.app/reset-password` URL.
+# 🚀 Production Build
 
-## Roles & Access
+Create production build:
 
-| Role         | Can do                                                                 |
-|--------------|-------------------------------------------------------------------------|
-| Super Admin  | Everything Admin can, plus change any user's role, delete profiles     |
-| Admin        | Manage users, courses, batches, teachers, students; view all reports   |
-| Teacher      | Manage assignments/attendance for their assigned batches only          |
-| Student      | View own profile, assignments, submit work, view own attendance        |
+```bash
+npm run build
+```
 
-Route access is enforced in two layers:
-1. **UI**: `src/routes/ProtectedRoute.tsx` redirects unauthenticated users to
-   `/login` and unauthorized roles to `/dashboard`.
-2. **Database**: `supabase/policies.sql` enforces the same rules at the row
-   level via Postgres RLS — so even a modified frontend can't bypass access
-   control.
+Preview build:
 
-## Key Modules
+```bash
+npm run preview
+```
 
-- **Auth** — login, signup, forgot/reset password, all via Supabase Auth.
-- **Dashboards** — role-specific stats pulled live from Postgres (`src/api/dashboard.api.ts`).
-- **Students** — profile fields (name, father's name, email, phone, address,
-  application ID, course, batch, timing, enrollment date, profile picture).
-- **Assignments** — create/edit/delete (Admin/Teacher), PDF/image upload,
-  due dates; students view, download, submit, add remarks; late submissions
-  auto-flagged by a Postgres trigger comparing `submitted_at` to `due_date`.
-- **Attendance** — Present/Absent/Late/Leave, marked per batch/date by
-  teachers, with exportable reports.
-- **Admin** — manage users/roles, courses, batches (with teacher assignment),
-  reports with CSV export.
-- **Settings** — profile edit, avatar upload, password change, dark mode,
-  notification preferences.
+---
 
-## Notes on Production Readiness
+# 🌐 Deployment
 
-- All data access goes through `src/api/*.ts` — no direct Supabase calls in
-  components — so swapping the backend later only touches this layer.
-- RLS policies are the source of truth for authorization; the UI role checks
-  are a UX convenience, not the security boundary.
-- File uploads are validated client-side (size/type) and stored under
-  per-user/per-assignment paths so storage policies can scope access.
-- Loading skeletons, empty states, and error states with retry are used
-  consistently via `src/components/shared`.
+Recommended platforms:
+
+- Vercel
+- Netlify
+
+Before deployment:
+
+- Add environment variables
+- Verify Supabase connection
+- Test authentication
+- Test database policies
+
+---
+
+# ✅ Testing Checklist
+
+Before release:
+
+- [x] Admin login
+- [x] Student management
+- [x] Teacher management
+- [x] Course management
+- [x] Batch management
+- [x] Assignment workflow
+- [x] Attendance tracking
+- [x] Protected routes
+- [x] Production build
+
+---
+
+# 🔮 Future Improvements
+
+Possible future enhancements:
+
+- Online classes integration
+- AI academic assistant
+- Parent portal
+- Payment management
+- Email notifications
+- Mobile application
+- Advanced analytics dashboard
+
+---
+
+# 👨‍💻 Developer
+
+**Bano Qabil Learning Management System**
+
+Built using:
+
+React + TypeScript + Supabase
+
+A complete digital solution for modern educational institutes.
+
+---
+
+# 📄 License
+
+This project is developed for educational and portfolio purposes.
