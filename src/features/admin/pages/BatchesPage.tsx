@@ -105,17 +105,19 @@ export default function BatchesPage() {
     try {
       if (editing) {
         await updateBatch(editing.id, {
-       ...values,
-       start_date: values.start_date || null,
-       end_date: values.end_date || null,
-    });
+          ...values,
+          // ✅ FIXED: Changed || to ?? to properly handle undefined and satisfy string | null type
+          start_date: values.start_date ?? null,
+          end_date: values.end_date ?? null,
+        });
         toast.success("Batch updated");
       } else {
         await createBatch({
-        ...values,
-        start_date: values.start_date || null,
-        end_date: values.end_date || null,
-     });
+          ...values,
+          // ✅ FIXED: Changed || to ?? to properly handle undefined and satisfy string | null type
+          start_date: values.start_date ?? null,
+          end_date: values.end_date ?? null,
+        });
         toast.success("Batch created");
       }
       setFormOpen(false);
