@@ -51,14 +51,14 @@ export default function StudentDashboard() {
             icon={ClipboardList}
             label="Pending Assignments"
             value={stats.pendingAssignments}
-            iconClassName="bg-warning/10 text-warning"
+            // ✅ FIXED: Removed iconClassName to resolve TS error (prop doesn't exist in StatCardProps)
             emptyHint="You're all caught up!"
           />
           <StatCard
             icon={ClipboardCheck}
             label="Submitted"
             value={stats.submittedAssignments}
-            iconClassName="bg-success/10 text-success"
+            // ✅ FIXED: Removed iconClassName to resolve TS error (prop doesn't exist in StatCardProps)
             emptyHint="No submissions yet."
           />
           <StatCard icon={CalendarCheck} label="Attendance" value={`${stats.attendancePercent}%`} />
