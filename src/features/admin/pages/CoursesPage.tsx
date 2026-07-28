@@ -70,11 +70,17 @@ export default function CoursesPage() {
 
   async function onSubmit(values: CourseFormValues) {
     try {
+      // ✅ FIXED: Convert undefined to null for description to satisfy API type expectations
+      const payload = {
+        ...values,
+        description: values.description ?? null,
+      };
+
       if (editing) {
-        await updateCourse(editing.id, values);
+        await updateCourse(editing.id, payload);
         toast.success("Course updated");
       } else {
-        await createCourse(values);
+        await createCourse(payload);
         toast.success("Course created");
       }
       setFormOpen(false);
